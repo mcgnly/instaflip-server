@@ -1,0 +1,15 @@
+{
+  "name": "instaflip-server",
+  "version": "1.0.0",
+  "description": "server side for instaflip",
+  "main": "index.js",
+  "author": "mcgnly",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mailgun-js": "^0.16.0",
+    "stripe": "^5.6.1"
+  }
+}
