@@ -1,0 +1,20 @@
+- user goes to website
+- uploads a video
+- converts it to pdf in browser
+- wants to buy a book
+- goes through payment
+- on payment success
+    - upload pdf to bucket
+        - with name, address, pdf
+    - this notifies me
+    - I get it printed and send it to them
+
+
+----------------------------------------------------
+TODO
+- find a video to turn into a pdf
+- test-print a book
+- on payment success trigger upload of cat
+- change from cat to whatever is in the browser
+- test all the way through
+- debug pdf still?

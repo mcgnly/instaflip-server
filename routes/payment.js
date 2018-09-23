@@ -31,21 +31,7 @@ const paymentApi = app => {
     stripe.charges.create(newBody, postStripeCharge(res));
   });
 
-  // app.post("/mail", (req, res) => {
-  //   console.log("req", req.body, req.data, req.url);
-  //   const { args, data } = req.body;
-  //   const email = {
-  //     from: "Excited User <me@samples.mailgun.org>",
-  //     to: "instaflip@mcgnly.com",
-  //     subject: "Hello",
-  //     text: `Send flipbook to: ${args.billing_name}`,
-  //     attachment: data
-  //   };
-  //   // enctype='multipart/form-data' for attachments to mailgun
-  //   mailgun.messages().send(email, function(error, body) {
-  //     console.log("email body", body, error);
-  //   });
-  // });
+
 
   return app;
 };
