@@ -3,6 +3,9 @@ const fs = require('fs'),
     keys = require('../instaflipServerConstants/aws');
     // cat = require('../instaflipServerConstants/cat.png');
 
+    AWS.config.loadFromPath('./s3_config.json');
+    var s3 = new AWS.S3();
+    
     const errorFn = (err, data)=>{
         if (err) {
             throw(err)
