@@ -1,5 +1,4 @@
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 const CORS_WHITELIST = require("./instaflipServerConstants/frontend");
 
@@ -11,9 +10,10 @@ const corsOptions = {
 };
 
 const configureServer = app => {
-	app.use(cors(corsOptions));
+	// app.use(cors(corsOptions));
+	app.use(cors()); //default options allows all
 
-	app.use(bodyParser.json());
+	
 };
 
 module.exports = configureServer;

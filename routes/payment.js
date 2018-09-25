@@ -1,4 +1,5 @@
 const stripe = require("../instaflipServerConstants/stripe");
+const bodyParser = require("body-parser");
 
 const postStripeCharge = res => (stripeErr, stripeRes) => {
   console.log("posting to stripe");
@@ -10,6 +11,8 @@ const postStripeCharge = res => (stripeErr, stripeRes) => {
 };
 
 const paymentApi = app => {
+  app.use(bodyParser.json());
+
   app.get("/pay", (req, res) => {
     console.log('getting');
     res.send({

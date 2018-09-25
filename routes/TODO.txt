@@ -12,9 +12,7 @@
 
 ----------------------------------------------------
 TODO
-- find a video to turn into a pdf
 - test-print a book
-- on payment success trigger upload of cat
-- change from cat to whatever is in the browser
+- debug CORS access-allowed origin 
+- debug post pdf from frontend, is it in the body?
 - test all the way through
-- debug pdf still?

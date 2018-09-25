@@ -1,6 +1,7 @@
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const AWSKEYS = require('../instaflipServerConstants/aws');
+const bodyParser = require("body-parser");
 
 AWS.config.loadFromPath('instaflipServerConstants/aws.json');
 
@@ -14,10 +15,12 @@ const errorFn = (err, data)=>{
 // var stream = fs.createReadStream('routes/TODO.txt', errorFn);
 
 const uploadApi = app => {
+    app.use(bodyParser.raw({ limit: '10mb', type: '*/*' }));
+
     app.post('/s3', (req, res) => {
         console.log('uploading to s3')
-        const fileToUpload = req.body.data;
         console.log('req.body', req.body);
+        const fileToUpload = req.body.data;
         var stream = fs.createReadStream(fileToUpload, errorFn);
         var upload = new AWS.S3.ManagedUpload({
             params: {
@@ -32,6 +35,7 @@ const uploadApi = app => {
         upload.send(function(err, data) {
             console.log(err, data);
         });
+        res.status(200).send({ success: 'I think the s3 worked?' });
     });
     return app;
 };
