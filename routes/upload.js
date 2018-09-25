@@ -11,11 +11,14 @@ const errorFn = (err, data)=>{
     return;
 };  
 
-var stream = fs.createReadStream('routes/TODO.txt', errorFn);
+// var stream = fs.createReadStream('routes/TODO.txt', errorFn);
 
 const uploadApi = app => {
     app.post('/s3', (req, res) => {
-        console.log('is this doing a thing')
+        console.log('uploading to s3')
+        const fileToUpload = req.body.data;
+        console.log('req.body', req.body);
+        var stream = fs.createReadStream(fileToUpload, errorFn);
         var upload = new AWS.S3.ManagedUpload({
             params: {
                 Bucket: 'mcgnly.com.examplebucket', 
