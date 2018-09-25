@@ -1,38 +1,30 @@
-const fs = require('fs'),
-    AWS = require('aws-sdk'),
-    keys = require('../instaflipServerConstants/aws');
-    // cat = require('../instaflipServerConstants/cat.png');
+const fs = require('fs');
+const AWS = require('aws-sdk');
+const AWSKEYS = require('../instaflipServerConstants/aws');
 
-    AWS.config.loadFromPath('./s3_config.json');
-    var s3 = new AWS.S3();
-    
-    const errorFn = (err, data)=>{
-        if (err) {
-            throw(err)
-        }
-        return;
-    };
+AWS.config.loadFromPath('instaflipServerConstants/aws.json');
 
-    const access = fs.access(('routes/TODO.txt'), errorFn);
-    
-const stream = fs.createReadStream('routes/TODO.txt', errorFn);
+const errorFn = (err, data)=>{
+    if (err) {
+        throw(err)
+    }
+    return;
+};  
 
-var params = {
-    Bucket: 'mcgnly.com.examplebucket', /* required */
-    Key: 'catPicture3', /* required */
-    UploadId: 'STRING_VALUE', /* required */
-    secretAccessKey: keys.secretAccessKey,
-    accessKeyId: keys.accessKeyId,
-    Body: stream
-};
-
+var stream = fs.createReadStream('routes/TODO.txt', errorFn);
 
 const uploadApi = app => {
     app.post('/s3', (req, res) => {
+        console.log('is this doing a thing')
         var upload = new AWS.S3.ManagedUpload({
-            params: params,
-            tags: [{Key: 'image', Value: 'cat'}, {Key: 'from', Value: 'Katie'}]
+            params: {
+                Bucket: 'mcgnly.com.examplebucket', 
+                Key: 'key', 
+                Body: stream,
+            },
+            tags: [{Key: 'tag1', Value: 'value1'}, {Key: 'tag2', Value: 'value2'}]
           });
+
         upload.on('httpUploadProgress', function(progress){console.log('progress is', progress)});
         upload.send(function(err, data) {
             console.log(err, data);
@@ -42,5 +34,3 @@ const uploadApi = app => {
 };
 
 module.exports = uploadApi;
-
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
