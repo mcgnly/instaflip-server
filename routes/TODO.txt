@@ -12,7 +12,11 @@
 
 ----------------------------------------------------
 TODO
-- test-print a book
-- debug CORS access-allowed origin 
-- debug post pdf from frontend, is it in the body?
-- test all the way through
+- is it getting all the way to s3?
+- get name and address and payment from stripe 
+    - append to upload body as keys
+- block upload before payment recieved
+- max filesize upload?
+- proper CORS access on server
+- show James and ask about security
+- deploy on kubernetes? docker? something like that?

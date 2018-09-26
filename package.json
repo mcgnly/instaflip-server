@@ -12,6 +12,7 @@
     "express": "^4.16.3",
     "mailgun-js": "^0.16.0",
     "s3": "^4.4.0",
+    "stream-buffers": "^3.0.2",
     "stripe": "^5.6.1"
   }
 }

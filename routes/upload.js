@@ -1,7 +1,8 @@
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const AWSKEYS = require('../instaflipServerConstants/aws');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
+const streamBuffers = require ('stream-buffers');
 
 AWS.config.loadFromPath('instaflipServerConstants/aws.json');
 
@@ -21,7 +22,15 @@ const uploadApi = app => {
         console.log('uploading to s3')
         console.log('req.body', req.body);
         const fileToUpload = req.body.data;
-        var stream = fs.createReadStream(fileToUpload, errorFn);
+
+        // Initialize stream
+        var stream = new streamBuffers.ReadableStreamBuffer({
+            frequency: 10,      // in milliseconds.
+            chunkSize: 2048     // in bytes.
+        }); 
+        
+        // With a buffer
+        stream.put(fileToUpload);
         var upload = new AWS.S3.ManagedUpload({
             params: {
                 Bucket: 'mcgnly.com.examplebucket', 
