@@ -1,8 +1,7 @@
-const fs = require('fs');
 const AWS = require('aws-sdk');
-const AWSKEYS = require('../instaflipServerConstants/aws');
-const bodyParser = require('body-parser');
-const streamBuffers = require ('stream-buffers');
+const multer = require ('multer');
+
+var storage = multer.memoryStorage();
 
 AWS.config.loadFromPath('instaflipServerConstants/aws.json');
 
@@ -13,38 +12,36 @@ const errorFn = (err, data)=>{
     return;
 };  
 
-// var stream = fs.createReadStream('routes/TODO.txt', errorFn);
 
 const uploadApi = app => {
-    app.use(bodyParser.raw({ limit: '10mb', type: '*/*' }));
-
+    // is it a good idea to keep 7.5 mb in memory?
+    // is this all blocking?
+    app.use(multer({ storage: storage }).single('pdf'));
+    
     app.post('/s3', (req, res) => {
-        console.log('uploading to s3')
-        console.log('req.body', req.body);
-        const fileToUpload = req.body.data;
+        // this is huge, maybe I can get it smaller?
+        const fileToUpload = req.file.buffer;
+        const {order_id, description} = req.body;
 
-        // Initialize stream
-        var stream = new streamBuffers.ReadableStreamBuffer({
-            frequency: 10,      // in milliseconds.
-            chunkSize: 2048     // in bytes.
-        }); 
-        
-        // With a buffer
-        stream.put(fileToUpload);
         var upload = new AWS.S3.ManagedUpload({
             params: {
                 Bucket: 'mcgnly.com.examplebucket', 
-                Key: 'key', 
-                Body: stream,
+                Key: `${order_id}.pdf`, 
+                Body: fileToUpload,
             },
-            tags: [{Key: 'tag1', Value: 'value1'}, {Key: 'tag2', Value: 'value2'}]
+            tags: [{Key: 'order_id', Value: order_id}, {Key: 'description', Value: description}]
           });
 
-        upload.on('httpUploadProgress', function(progress){console.log('progress is', progress)});
+        upload.on('httpUploadProgress', function(progress){
+            console.log('progress is', progress)
+        });
         upload.send(function(err, data) {
             console.log(err, data);
+            if (data) {
+                res.status(200).send({ success: 'uploaded to s3' });
+            }
         });
-        res.status(200).send({ success: 'I think the s3 worked?' });
+        
     });
     return app;
 };

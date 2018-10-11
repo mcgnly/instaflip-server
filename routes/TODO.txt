@@ -12,9 +12,7 @@
 
 ----------------------------------------------------
 TODO
-- is it getting all the way to s3?
-- get name and address and payment from stripe 
-    - append to upload body as keys
+- make a better alert email body
 - block upload before payment recieved
 - max filesize upload?
 - proper CORS access on server
