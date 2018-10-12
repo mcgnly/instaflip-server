@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "mcgnly",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "aws-sdk": "^2.321.0",
     "body-parser": "^1.18.2",
