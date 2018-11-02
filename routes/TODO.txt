@@ -12,9 +12,18 @@
 
 ----------------------------------------------------
 TODO
+- email? 
+- change ssh port on dig ocean
+
+ 
+
+
+
 - make a better alert email body
 - block upload before payment recieved
 - max filesize upload?
 - proper CORS access on server
 - show James and ask about security
-- deploy on kubernetes? docker? something like that?
+- get working in docker
+
+
